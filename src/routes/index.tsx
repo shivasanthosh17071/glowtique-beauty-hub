@@ -1,24 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { ArrowRight, Check, ChevronRight, Sparkles } from "lucide-react";
+import { AppHeader, ArtistCard, MobileTabs, SearchPanel, SectionHeading, artists } from "@/components/glowtique";
+import heroImage from "@/assets/glowtique-hero.jpg";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [{ title: "Glowtique — Beauty, brought home" }, { name: "description", content: "Find verified makeup artists and beauticians for weddings, celebrations and every beautiful occasion." }, { property: "og:title", content: "Glowtique — Beauty, brought home" }, { property: "og:description", content: "Find verified makeup artists and beauticians for every beautiful occasion." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { property: "og:image", content: "https://id-preview--ede6a7bd-7cf6-465f-b038-b474d1b82a67.lovable.app/src/assets/glowtique-hero.jpg" }, { name: "twitter:image", content: "https://id-preview--ede6a7bd-7cf6-465f-b038-b474d1b82a67.lovable.app/src/assets/glowtique-hero.jpg" }] }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+function Home() {
+  return <div className="min-h-screen bg-wine text-ivory"><AppHeader/><main className="mx-auto max-w-7xl pb-24"><section className="grid items-center gap-10 px-5 pb-14 pt-12 sm:px-8 lg:grid-cols-[1fr_0.82fr] lg:px-12 lg:pb-24 lg:pt-20"><div className="gt-rise"><p className="font-mono text-[10px] tracking-[0.22em] text-blush">THE BEAUTY CONCIERGE</p><h1 className="mt-4 max-w-xl font-serif text-5xl leading-[0.95] text-ivory sm:text-6xl">Find the hand for your look<span className="text-blush">.</span></h1><p className="mt-6 max-w-lg font-serif text-xl leading-relaxed text-ivory/70">Verified beauty artists for weddings, evenings and the little moments that deserve a little more.</p><div className="mt-8"><SearchPanel/></div><div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] tracking-[0.12em] text-ivory/45"><span>2,400+ ARTISTS</span><span>·</span><span>VERIFIED WORK</span><span>·</span><span>ON-TIME PROMISE</span></div></div><div className="gt-rise relative" style={{ animationDelay: "140ms" }}><div className="relative overflow-hidden rounded-[28px] p-2 ring-1 ring-gold/50"><img src={heroImage} alt="South Asian bride with luminous bridal makeup" width={1088} height={1360} className="aspect-[4/5] w-full rounded-[22px] object-cover"/><div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-wine/85 p-4 backdrop-blur"><div className="flex items-center justify-between gap-3"><div><p className="font-mono text-[9px] tracking-widest text-blush">FEATURED ARTIST</p><p className="mt-1 font-serif text-xl">Meera Kapoor</p></div><span className="flex shrink-0 items-center gap-1 rounded-full bg-gold/15 px-2 py-1 text-[10px] text-gold"><Check className="size-3"/>4.9</span></div></div></div></div></section><section className="border-t border-white/10 px-5 py-14 sm:px-8 lg:px-12"><SectionHeading eyebrow="01 / CURATED FOR YOU" title="Top rated nearby" action={<Link to="/browse" className="flex items-center gap-1 text-[10px] font-mono tracking-widest text-blush">VIEW ALL <ArrowRight className="size-3"/></Link>}/><div className="mt-5 flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none]">{artists.slice(0, 3).map((artist) => <ArtistCard artist={artist} compact key={artist.id}/>)}</div></section><section id="how-it-works" className="border-t border-white/10 px-5 py-14 sm:px-8 lg:px-12"><SectionHeading eyebrow="02 / THE RITUAL" title="Bespoke, booked in minutes"/><div className="mt-8 grid gap-3 md:grid-cols-3">{[["01", "Choose your artist", "Browse verified portfolios, ratings and packages curated for your occasion."], ["02", "Reserve the date", "Pick a time from live availability and confirm with a modest token."], ["03", "Glow at home", "Your artist arrives fully prepared — you simply arrive as the star."]].map(([number, title, copy]) => <div key={number} className="rounded-2xl bg-wine-700 p-6 ring-1 ring-white/10"><div className="grid size-10 place-items-center rounded-full border border-gold/50 font-mono text-xs text-gold">{number}</div><h3 className="mt-5 font-serif text-2xl">{title}</h3><p className="mt-2 text-sm leading-relaxed text-ivory/55">{copy}</p></div>)}</div></section><section id="become-an-artist" className="border-t border-white/10 px-5 py-14 sm:px-8 lg:px-12"><div className="rounded-3xl bg-plum p-8 text-center sm:p-12"><Sparkles className="mx-auto size-6 text-gold"/><h2 className="mt-4 font-serif text-4xl">Your craft deserves a stage.</h2><p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ivory/65">Join the curated network helping clients find their signature look from the comfort of home.</p><Button asChild className="mt-7 rounded-xl bg-gold text-wine hover:bg-gold/90"><Link to="/artist-dashboard">Join as an artist <ChevronRight/></Link></Button></div></section></main><MobileTabs/></div>;
 }
